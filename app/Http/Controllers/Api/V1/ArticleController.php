@@ -5,19 +5,28 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use Illuminate\Validation\ValidationException;
 
 class ArticleController extends Controller
 {
     public function index(Request $request)
     {
-        $validated = $request->validate([
-            'query'    => 'nullable|string|max:255',
-            'category' => 'nullable|string|max:255',
-            'source'   => 'nullable|string|max:255',
-            'date'     => 'nullable|date',
-            'author'   => 'nullable|string|max:255',
-            'per_page' => 'nullable|integer|min:1|max:100',
-        ]);
+        try {
+            $validated = $request->validate([
+                'query'    => 'nullable|string|max:255',
+                'category' => 'nullable|string|max:255',
+                'source'   => 'nullable|string|max:255',
+                'date'     => 'nullable|date',
+                'author'   => 'nullable|string|max:255',
+                'per_page' => 'nullable|integer|min:1|max:100',
+            ]);
+        } catch (ValidationException $e) {
+            // Return JSON error response
+            return response()->json([
+                'errors' => $e->errors(),
+                'message' => 'Validation Failed',
+            ], 422);
+        }
 
         $query = Article::query();
 
@@ -47,6 +56,7 @@ class ArticleController extends Controller
             $query->where('author', 'LIKE', "%{$validated['author']}%");
         }
 
+        // Sorting
         if ($request->has('sort')) {
             $sort = $request->sort;
             if ($sort === 'latest') {
@@ -61,4 +71,5 @@ class ArticleController extends Controller
 
         return response()->json($articles);
     }
+
 }
