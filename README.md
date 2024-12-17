@@ -51,18 +51,18 @@ cd NewsAggregator
    ```
 
    Update the following variables in `.env`:
-   # Database Configuration
-   DB_DATABASE=news_db
-   DB_USERNAME=your_db_username
-   DB_PASSWORD=your_db_password
+   #### Database Configuration
+   - DB_DATABASE=news_db
+   - DB_USERNAME=your_db_username
+   - DB_PASSWORD=your_db_password
 
-   # API Keys
-   NEWS_API_KEY=your_newsapi_key
-   GUARDIAN_API_KEY=your_guardian_api_key
-   NYT_API_KEY=your_nyt_api_key
+   #### API Keys
+   - NEWS_API_KEY=your_newsapi_key
+   - GUARDIAN_API_KEY=your_guardian_api_key
+   - NYT_API_KEY=your_nyt_api_key
 
-   # News Sections (Categories)
-   NEWS_SECTIONS=general,technology,business,sports,health,world
+   #### News Sections (Categories)
+   - NEWS_SECTIONS=general,technology,business,sports,health,world
 
 
 4. Run migrations:
